@@ -15,6 +15,9 @@ inputs:
     required: true
     description: 'Emoji reaction used to acknowledge comment'
     default: '+1'
+outputs:
+  command:
+    description: the matched command (from inputs.commands) - this will be an empty if there is no match
 runs:
   using: 'node16'
   main: 'dist/index.js'

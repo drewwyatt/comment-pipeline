@@ -1,0 +1,31 @@
+on: issue_comment
+
+jobs:
+  parse-comment:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.issue.pull_request }}
+    outputs:
+      command: ${{ steps.parse-comment.outputs.command }}
+    steps:
+      - uses: ./
+        id: parse-comment
+        with:
+          comment: ${{ github.event.comment }}
+          commands: |
+            /format
+            /rebase
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  format:
+    runs-on: ubuntu-latest
+    needs: [parse-comment]
+    if: ${{ jobs.parse-comment.outputs.command == '/format' }}
+    steps:
+      - run: echo 'formatting...'
+
+  rebase:
+    runs-on: ubuntu-latest
+    needs: [read-comment]
+    if: ${{ jobs.read-comment.outputs.command == '/rebase' }}
+    steps:
+      - run: echo 'rebasing...'

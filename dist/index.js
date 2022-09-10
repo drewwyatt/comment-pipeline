@@ -91,6 +91,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const inputs = __importStar(__nccwpck_require__(6180));
+const outputs = __importStar(__nccwpck_require__(5314));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -102,6 +103,7 @@ function run() {
                 return;
             }
             core.debug(`found command: ${command}...`);
+            outputs.setCommand(command);
             core.debug('creating octokit...');
             const octokit = github.getOctokit(inputs.token);
             core.debug(`acknowledging comment with id ${inputs.comment.id}...`);
@@ -120,6 +122,20 @@ function run() {
     });
 }
 run();
+
+
+/***/ }),
+
+/***/ 5314:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.setCommand = void 0;
+const core_1 = __nccwpck_require__(2186);
+const setCommand = (command) => (0, core_1.setOutput)('command', command);
+exports.setCommand = setCommand;
 
 
 /***/ }),

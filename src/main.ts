@@ -2,6 +2,7 @@ import * as core from '@actions/core'
 import * as github from '@actions/github'
 
 import * as inputs from './inputs'
+import * as outputs from './outputs'
 
 async function run(): Promise<void> {
   try {
@@ -16,6 +17,8 @@ async function run(): Promise<void> {
     }
 
     core.debug(`found command: ${command}...`)
+    outputs.setCommand(command)
+
     core.debug('creating octokit...')
     const octokit = github.getOctokit(inputs.token)
     core.debug(`acknowledging comment with id ${inputs.comment.id}...`)
