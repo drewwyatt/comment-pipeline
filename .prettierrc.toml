@@ -1,0 +1,11 @@
+arrowParens = "avoid"
+printWidth = 90
+semi = false
+singleQuote = true
+tabWidth = 2
+trailingComma = "all"
+
+[[overrides]]
+files = "*.yml"
+[[overrides.options]]
+tabWidth = 2
