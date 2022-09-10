@@ -13,7 +13,7 @@ jobs:
       - uses: ./
         id: parse-comment
         with:
-          comment: ${{ github.event.comment }}
+          comment: ${{ toJSON(github.event.comment) }}
           commands: |
             /format
             /rebase
