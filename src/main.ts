@@ -1,16 +1,32 @@
 import * as core from '@actions/core'
-import { wait } from './wait'
+import * as github from '@actions/github'
+
+import * as inputs from './inputs'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
+    core.debug(`checking comment for commands: ${inputs.commands}...`)
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    core.debug(`comment body: "${inputs.comment.body}"`)
+    const command = inputs.commands.find(c => inputs.comment.body.startsWith(c))
 
-    core.setOutput('time', new Date().toTimeString())
+    if (!command) {
+      core.debug('no command found in comment body. exiting...')
+      return
+    }
+
+    core.debug(`found command: ${command}...`)
+    core.debug('creating octokit...')
+    const octokit = github.getOctokit(inputs.token)
+    core.debug(`acknowledging comment with id ${inputs.comment.id}...`)
+    await octokit.rest.reactions.createForIssueComment({
+      owner: github.context.repo.owner,
+      repo: github.context.repo.repo,
+      comment_id: inputs.comment.id,
+      content: inputs.reaction,
+    })
+
+    core.debug('done!')
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }

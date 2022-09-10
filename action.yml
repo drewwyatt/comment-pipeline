@@ -8,6 +8,9 @@ inputs:
   comment:
     required: true
     description: 'The comment object (usually `github.event.comment`)'
+  github-token:
+    required: true
+    description: 'Token with access to your repo's issue comments (usually `secrets.GITHUB_TOKEN`)'
   reaction:
     required: true
     description: 'Emoji reaction used to acknowledge comment'
