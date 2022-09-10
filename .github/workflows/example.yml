@@ -19,13 +19,13 @@ jobs:
   format:
     runs-on: ubuntu-latest
     needs: [parse-comment]
-    if: ${{ jobs.parse-comment.outputs.command == '/format' }}
+    if: ${{ needs.parse-comment.outputs.command == '/format' }}
     steps:
       - run: echo 'formatting...'
 
   rebase:
     runs-on: ubuntu-latest
     needs: [read-comment]
-    if: ${{ jobs.read-comment.outputs.command == '/rebase' }}
+    if: ${{ needs.read-comment.outputs.command == '/rebase' }}
     steps:
       - run: echo 'rebasing...'
