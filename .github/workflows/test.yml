@@ -25,4 +25,4 @@ jobs:
             /format
             /rebase
           comment: '{ "id": 1234, "body": "lol" }'
-          token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
