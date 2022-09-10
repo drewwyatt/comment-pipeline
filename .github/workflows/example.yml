@@ -1,5 +1,7 @@
 on: issue_comment
 
+name: Example
+
 jobs:
   parse-comment:
     runs-on: ubuntu-latest
@@ -7,6 +9,7 @@ jobs:
     outputs:
       command: ${{ steps.parse-comment.outputs.command }}
     steps:
+      - uses: actions/checkout@v2
       - uses: ./
         id: parse-comment
         with:
