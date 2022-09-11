@@ -1,4 +1,4 @@
-name: 'Comment Actions'
+name: 'Comment Pipeline'
 description: 'Run workflows with comment commands'
 author: 'Drew Wyatt'
 inputs:
