@@ -1,6 +1,9 @@
 name: 'Comment Pipeline'
 description: 'Run workflows with comment commands'
 author: 'Drew Wyatt'
+branding:
+  icon: 'arrow-right'
+  color: 'yellow'
 inputs:
   commands:
     required: true
