@@ -53,6 +53,20 @@ comment: ${{ toJSON(github.event.comment) }}
 
 Almost always should be `${{ secrets.GITHUB_TOKEN }}`
 
+### `reaction` (optional - defaults to ":+1:")
+
+Emoji reaction used to acknowledge comment.
+
+**Possible options:**
+
+- `+1`
+- `-1`
+- `laugh`
+- `confused`
+- `heart`
+- `hooray`
+- `rocket`
+- `eyes`
 
 ## Outputs
 
