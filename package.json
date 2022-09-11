@@ -1,6 +1,6 @@
 {
-  "name": "comment-actions",
-  "version": "0.0.0",
+  "name": "comment-pipeline",
+  "version": "1.0.0",
   "private": true,
   "description": "Run workflows with comment commands",
   "main": "lib/main.js",
@@ -15,12 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/drewwyatt/comment-actions.git"
+    "url": "git+https://github.com/drewwyatt/comment-pipeline.git"
   },
   "keywords": [
     "actions",
-    "node",
-    "setup"
+    "comment",
+    "pipeline"
   ],
   "author": "Drew Wyatt",
   "license": "MIT",
