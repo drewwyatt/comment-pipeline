@@ -18,6 +18,10 @@ inputs:
 outputs:
   command:
     description: the matched command (from inputs.commands) - this will be an empty if there is no match
+  arguments:
+    description: everything that comes after the matched command - this will be an empty if there is no match
+  invocation:
+    description: the full comment body - this will be an empty if there is no match
 runs:
   using: 'node16'
   main: 'dist/index.js'

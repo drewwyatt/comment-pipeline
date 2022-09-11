@@ -3,6 +3,7 @@ import * as github from '@actions/github'
 
 import * as inputs from './inputs'
 import * as outputs from './outputs'
+import parseOutputs from './parse-outpits'
 
 async function run(): Promise<void> {
   try {
@@ -18,6 +19,14 @@ async function run(): Promise<void> {
 
     core.debug(`found command: ${command}...`)
     outputs.setCommand(command)
+
+    const { arguments: args, invocation } = parseOutputs(command, inputs.comment)
+
+    core.debug(`setting args to: ${args}`)
+    outputs.setArguments(args)
+
+    core.debug(`setting invocation to: ${invocation}`)
+    outputs.setInvocation(invocation)
 
     core.debug('creating octokit...')
     const octokit = github.getOctokit(inputs.token)

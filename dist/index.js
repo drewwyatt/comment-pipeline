@@ -87,11 +87,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const inputs = __importStar(__nccwpck_require__(6180));
 const outputs = __importStar(__nccwpck_require__(5314));
+const parse_outpits_1 = __importDefault(__nccwpck_require__(876));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -104,6 +108,11 @@ function run() {
             }
             core.debug(`found command: ${command}...`);
             outputs.setCommand(command);
+            const { arguments: args, invocation } = (0, parse_outpits_1.default)(command, inputs.comment);
+            core.debug(`setting args to: ${args}`);
+            outputs.setArguments(args);
+            core.debug(`setting invocation to: ${invocation}`);
+            outputs.setInvocation(invocation);
             core.debug('creating octokit...');
             const octokit = github.getOctokit(inputs.token);
             core.debug(`acknowledging comment with id ${inputs.comment.id}...`);
@@ -132,10 +141,33 @@ run();
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.setCommand = void 0;
+exports.setInvocation = exports.setArguments = exports.setCommand = void 0;
 const core_1 = __nccwpck_require__(2186);
 const setCommand = (command) => (0, core_1.setOutput)('command', command);
 exports.setCommand = setCommand;
+const setArguments = (args) => (0, core_1.setOutput)('arguments', args);
+exports.setArguments = setArguments;
+const setInvocation = (invocation) => (0, core_1.setOutput)('invocation', invocation);
+exports.setInvocation = setInvocation;
+
+
+/***/ }),
+
+/***/ 876:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const parseOutputs = (command, comment) => {
+    const invocation = comment.body;
+    return {
+        arguments: invocation.replace(command, '').trim(),
+        command,
+        invocation,
+    };
+};
+exports["default"] = parseOutputs;
 
 
 /***/ }),
