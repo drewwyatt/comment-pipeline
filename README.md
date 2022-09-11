@@ -18,7 +18,6 @@ jobs:
     outputs:
       command: ${{ steps.parse-comment.outputs.command }}
     steps:
-      - uses: actions/checkout@v2
       - uses: drewwyatt/comment-pipeline@v1
         id: parse-comment
         with:
