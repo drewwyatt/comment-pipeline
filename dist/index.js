@@ -99,30 +99,35 @@ const parse_outpits_1 = __importDefault(__nccwpck_require__(876));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            core.debug(`checking comment for commands: ${inputs.commands}...`);
-            core.debug(`comment body: "${inputs.comment.body}"`);
+            core.debug('Cogging inputs...');
+            core.debug(`inputs.commands: ${inputs.commands}`);
+            core.debug(`inputs.comment.body: ${inputs.comment.body}`);
+            core.debug(`inputs.comment.id: ${inputs.comment.id}`);
+            core.info(`Checking comment for commands...`);
             const command = inputs.commands.find(c => inputs.comment.body.startsWith(c));
             if (!command) {
-                core.debug('no command found in comment body. exiting...');
+                core.info('No command found in comment body. Exiting. 👋');
                 return;
             }
-            core.debug(`found command: ${command}...`);
+            core.info(`Found command: "${command}"...`);
             outputs.setCommand(command);
             const { arguments: args, invocation } = (0, parse_outpits_1.default)(command, inputs.comment);
-            core.debug(`setting args to: ${args}`);
+            if (args) {
+                core.info(`Setting args to: "${args}"`);
+            }
             outputs.setArguments(args);
-            core.debug(`setting invocation to: ${invocation}`);
+            core.debug(`Setting invocation to: "${invocation}"`);
             outputs.setInvocation(invocation);
-            core.debug('creating octokit...');
+            core.debug('Creating octokit...');
             const octokit = github.getOctokit(inputs.token);
-            core.debug(`acknowledging comment with id ${inputs.comment.id}...`);
+            core.debug(`Acknowledging comment with id ${inputs.comment.id}...`);
             yield octokit.rest.reactions.createForIssueComment({
                 owner: github.context.repo.owner,
                 repo: github.context.repo.repo,
                 comment_id: inputs.comment.id,
                 content: inputs.reaction,
             });
-            core.debug('done!');
+            core.info('Done! 👋');
         }
         catch (error) {
             if (error instanceof Error)
