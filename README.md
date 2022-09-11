@@ -6,6 +6,44 @@ Run workflows with comment commands
 
 Check out the [Example Workflow](.github/workflows/example.yml).
 
+```yml
+on: issue_comment
+
+name: Example
+
+jobs:
+  parse-comment:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.issue.pull_request }}
+    outputs:
+      command: ${{ steps.parse-comment.outputs.command }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: drewwyatt/comment-pipeline@v1
+        id: parse-comment
+        with:
+          comment: ${{ toJSON(github.event.comment) }}
+          commands: |
+            /format
+            /rebase
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  format:
+    runs-on: ubuntu-latest
+    needs: [parse-comment]
+    if: ${{ needs.parse-comment.outputs.command == '/format' }}
+    steps:
+      - run: echo 'formatting...'
+
+  rebase:
+    runs-on: ubuntu-latest
+    needs: [parse-comment]
+    if: ${{ needs.read-comment.outputs.command == '/rebase' }}
+    steps:
+      - run: echo 'rebasing...'
+
+```
+
 ![image](https://user-images.githubusercontent.com/1727821/189549606-2c833b00-29e0-47c4-a2f2-c97eb93b6789.png)
 
 ## Inputs
