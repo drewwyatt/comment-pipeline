@@ -1,7 +1,42 @@
 import * as process from 'process'
 import * as cp from 'child_process'
 import * as path from 'path'
-import { test } from '@jest/globals'
+import { describe, expect, test } from '@jest/globals'
+
+import parseOutputs from '../src/parse-outpits'
+
+const toComment = (body: string) => ({ id: -1, body })
+
+describe('parseOutputs', () => {
+  test('no args', () => {
+    const command = '/rebase'
+    expect(parseOutputs(command, toComment(command))).toEqual({
+      command,
+      arguments: '',
+      invocation: command,
+    })
+  })
+
+  test('no space between command and args', () => {
+    expect(parseOutputs('deploy', toComment('deploy:stage'))).toEqual({
+      command: 'deploy',
+      arguments: ':stage',
+      invocation: 'deploy:stage',
+    })
+  })
+
+  test('trims whitespace', () => {
+    const command = 'format'
+    const args = `path/to/some/file.ts`
+    const invocation = `${command}            ${args}     `
+
+    expect(parseOutputs(command, toComment(invocation))).toEqual({
+      command: 'format',
+      arguments: args,
+      invocation,
+    })
+  })
+})
 
 // shows how the runner will run a javascript action with env / stdout protocol
 test('test runs', () => {
