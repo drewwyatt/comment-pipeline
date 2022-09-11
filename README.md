@@ -1,4 +1,4 @@
-# 🗨️ ⚙️ comment-actions
+# 🗨️ ⚙️ comment-pipeline
 
 Run workflows with comment commands
 
@@ -15,11 +15,12 @@ Check out the [Example Workflow](.github/workflows/example.yml).
 Newline delimited list of commands that should trigger workflows.
 
 e.g.
+
 ```yml
 # just one
 commands: build
 
-# more than one 
+# more than one
 # (the slashes are not required that is totally up to your preference)
 commands: |
   /format
