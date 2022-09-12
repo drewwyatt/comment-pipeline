@@ -108,7 +108,7 @@ Emoji reaction used to acknowledge comment.
 
 ## Outputs
 
-### `comand` (can be empty)
+### `command` (can be empty)
 
 The matched command (from `inputs.commands`) - **this will be an empty if there is no match**.
 
