@@ -60,8 +60,8 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
-      - name: Format
-        run: npm run format
+      - name: Package
+        run: npm run package
       - uses: stefanzweifel/git-auto-commit-action@v4
         name: Commit Changes
         id: auto-commit-action
